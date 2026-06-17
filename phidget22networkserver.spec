@@ -6,6 +6,11 @@ License:        LGPL-3.0-or-later and BSD-2-Clause and BSD-3-Clause
 URL:            https://www.phidgets.com
 Source0:        https://www.phidgets.com/downloads/phidget22/servers/linux/%{name}/%{name}-%{version}.tar.gz
 
+%global phidget22wwwjs_name Phidget22JavaScriptControlPanel
+%global phidget22wwwjs_version 1.25.20260408
+
+Source1:        https://www.phidgets.com/downloads/phidget22/tools/any/%{phidget22wwwjs_name}/%{phidget22wwwjs_name}_%{phidget22wwwjs_version}.zip
+
 BuildRequires:  libphidget22-devel
 BuildRequires:  libphidget22extra-devel
 BuildRequires:  autoconf
@@ -40,6 +45,8 @@ of by the robust libphidget API.
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 mkdir -p -m 0755 %{buildroot}%{_sysconfdir}/phidgets/
 install -p -m 0644 files/etc/phidgets/* %{buildroot}%{_sysconfdir}/phidgets/
+mkdir -p -m 0755 %{buildroot}%{_localstatedir}/phidgets/www/
+unzip -u %{SOURCE1} -d %{buildroot}%{_localstatedir}/phidgets/www/
 
 %ldconfig_scriptlets
 
@@ -47,6 +54,7 @@ install -p -m 0644 files/etc/phidgets/* %{buildroot}%{_sysconfdir}/phidgets/
 %doc AUTHORS README
 %license COPYING
 %{_bindir}/%{name}
+%{_localstatedir}/phidgets/www/
 %{_sysconfdir}/phidgets/
 
 %changelog
